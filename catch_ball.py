@@ -11,36 +11,25 @@ class CatchBall:
         # variables
         self.reset()
 
-    def update(self, action):
-        """
-        action:
-            0: Rock
-            1: Paper
-            2: Scissors
-        """
-        print action
 
-        if action == 0:
-            if self.enemy_card[0][0] == 1:
-                self.reward = 0
-            elif self.enemy_card[0][1] == 1:
-                self.reward = -1
-            else:
-                self.reward = 1
-        elif action == 1:
-            if self.enemy_card[0][0] == 1:
-                self.reward = 1
-            elif self.enemy_card[0][1] == 1:
-                self.reward = 0
-            else:
-                self.reward = -1
+    def get_hand_number(self, hand_list):
+        if hand_list[0][0] == 1:
+            return 0
+        elif hand_list[0][1] == 1:
+            return 1
         else:
-            if self.enemy_card[0][0] == 1:
-                self.reward = -1
-            elif self.enemy_card[0][1] == 1:
-                self.reward = 1
-            else:
-                self.reward = 0
+            return 2
+
+
+    def update(self, action):
+        t_action = self.get_hand_number(self.enemy_card)
+
+        if (action == t_action):
+            self.reward = 0
+        elif (action == 0 and t_action == 2) or (action == 1 and t_action == 0) or (action == 2 and t_action == 1):
+            self.reward = 1
+        else:
+            self.reward = -1
 
     def observe(self):
         return self.enemy_card, self.reward
@@ -58,3 +47,11 @@ class CatchBall:
     def set_card(self, action):
         self.enemy_card = np.zeros((1, 3))
         self.enemy_card[0][int(action)] = 1
+
+    def get_hand_name(self, hand):
+        if hand == 0:
+            return "Rock"
+        elif hand == 1:
+            return "Papper"
+        else:
+            return "Scissors"

@@ -13,30 +13,13 @@ def init():
     plt.axis("off")
     return img
 
-
-def get_hand_name(hand):
-    if hand == 0:
-        return "Rock"
-    elif hand == 1:
-        return "Papper"
-    else:
-        return "Scissors"
-
-def get_hand_number(hand_list):
-    if hand_list[0][0] == 1:
-        return 0
-    elif hand_list[0][1] == 1:
-        return 1
-    else:
-        return 2
-
-def print_log(cpu_hand, myself_hand, reward):
+def print_log(env, cpu_hand, myself_hand, reward):
     log = []
     log.append("CPU:")
-    log.append(get_hand_name(cpu_hand))
+    log.append(env.get_hand_name(cpu_hand))
     log.append(" ")
     log.append("MySelf:")
-    log.append(get_hand_name(myself_hand))
+    log.append(env.get_hand_name(myself_hand))
 
     if reward == 0:
         print "CPU EVEN " + "".join(log)
@@ -65,4 +48,4 @@ if __name__ == "__main__":
     env.execute_action(action_t)
     state_t, reward_t = env.observe()
 
-    print_log(int(action_t), get_hand_number(state_t), reward_t)
+    print_log(env, int(action_t), env.get_hand_number(state_t), reward_t)

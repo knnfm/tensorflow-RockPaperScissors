@@ -1,2 +1,2 @@
-model_checkpoint_path: "/tensorflow_dev/RockPaperScissors/models/catch_ball.ckpt"
-all_model_checkpoint_paths: "/tensorflow_dev/RockPaperScissors/models/catch_ball.ckpt"
+model_checkpoint_path: "/tensorflow_dev/tensorflow-RockPaperScissors/models/catch_ball.ckpt"
+all_model_checkpoint_paths: "/tensorflow_dev/tensorflow-RockPaperScissors/models/catch_ball.ckpt"

@@ -11,42 +11,43 @@ from dqn_agent import DQNAgent
 def init():
     img.set_array(state_t_1)
     plt.axis("off")
-    return img,
+    return img
 
 
-def animate(step):
-    global win, lose
-    global state_t_1, reward_t, terminal
-
-    if terminal:
-        env.reset()
-
-        # for log
-        if reward_t == 1:
-            win += 1
-        elif reward_t == -1:
-            lose += 1
-
-        print("WIN: {:03d}/{:03d} ({:.1f}%)".format(win, win + lose, 100 * win / (win + lose)))
-
+def get_hand_name(hand):
+    if hand == 0:
+        return "Rock"
+    elif hand == 1:
+        return "Papper"
     else:
-        state_t = state_t_1
+        return "Scissors"
 
-        # execute action in environment
-        action_t = agent.select_action(state_t, 0.0)
-        env.execute_action(action_t)
+def get_hand_number(hand_list):
+    if hand_list[0][0] == 1:
+        return 0
+    elif hand_list[0][1] == 1:
+        return 1
+    else:
+        return 2
 
-    # observe environment
-    state_t_1, reward_t, terminal = env.observe()
+def print_log(cpu_hand, myself_hand, reward):
+    log = []
+    log.append("CPU:")
+    log.append(get_hand_name(cpu_hand))
+    log.append(" ")
+    log.append("MySelf:")
+    log.append(get_hand_name(myself_hand))
 
-    # animate
-    img.set_array(state_t_1)
-    plt.axis("off")
-    return img,
+    if reward == 0:
+        print "CPU EVEN " + "".join(log)
+    elif reward == 1:
+        print "CPU WIN " + "".join(log)
+    else:
+        print "CPU LOSE " + "".join(log)
 
 
 if __name__ == "__main__":
-    # args
+        # args
     parser = argparse.ArgumentParser()
     parser.add_argument("-m", "--model_path")
     parser.add_argument("-a", "--action")
@@ -64,9 +65,4 @@ if __name__ == "__main__":
     env.execute_action(action_t)
     state_t, reward_t = env.observe()
 
-    if reward_t == 0:
-        print "EVEN"
-    elif reward_t == 1:
-        print "WIN"
-    else:
-        print "LOSE"
+    print_log(int(action_t), get_hand_number(state_t), reward_t)

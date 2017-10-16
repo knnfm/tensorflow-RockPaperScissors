@@ -13,20 +13,20 @@ def init():
     plt.axis("off")
     return img
 
-def print_log(env, cpu_hand, myself_hand, reward):
+def print_result(env, ai_hand, challenger_hand, reward):
     log = []
-    log.append("CPU:")
-    log.append(env.get_hand_name(cpu_hand))
+    log.append("AI:")
+    log.append(env.get_hand_name(ai_hand))
     log.append(" ")
-    log.append("MySelf:")
-    log.append(env.get_hand_name(myself_hand))
+    log.append("Challenger:")
+    log.append(env.get_hand_name(challenger_hand))
 
     if reward == 0:
-        print "CPU EVEN " + "".join(log)
+        print "AI EVEN " + "".join(log)
     elif reward == 1:
-        print "CPU WIN " + "".join(log)
+        print "AI WIN " + "".join(log)
     else:
-        print "CPU LOSE " + "".join(log)
+        print "AI LOSE " + "".join(log)
 
 
 if __name__ == "__main__":
@@ -48,4 +48,4 @@ if __name__ == "__main__":
     env.execute_action(action_t)
     state_t, reward_t = env.observe()
 
-    print_log(env, int(action_t), env.get_hand_number(state_t), reward_t)
+    print_result(env, int(action_t), env.get_hand_number(state_t), reward_t)
